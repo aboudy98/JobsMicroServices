@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.embarkx.jobms.dto.JonWithCompanyDTO;
+
 import lombok.RequiredArgsConstructor;
 
 
@@ -25,7 +27,8 @@ public class JobController {
     private final JobService jobService;
 
     @GetMapping
-    public ResponseEntity <List<Job>> findAll(){
+    public ResponseEntity <List<JonWithCompanyDTO>> findAll(){
+
         return new ResponseEntity<>(jobService.findAll(),HttpStatus.OK);
     }
 

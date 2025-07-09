@@ -2,8 +2,10 @@ package com.embarkx.jobms.JobFolder;
 
 import java.util.List;
 
+import com.embarkx.jobms.dto.JonWithCompanyDTO;
+
 public interface JobService {
-    List<Job> findAll();
+    List<JonWithCompanyDTO> findAll();
     void createJob(Job job);
     Job findById(Long id);
     void deleteJob(Long id) throws Exception;
