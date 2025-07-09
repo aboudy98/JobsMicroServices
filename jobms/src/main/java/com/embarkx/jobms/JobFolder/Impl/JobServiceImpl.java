@@ -2,8 +2,9 @@ package com.embarkx.jobms.JobFolder.Impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
+
 import java.util.stream.Collectors;
+
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -22,11 +23,12 @@ public class JobServiceImpl implements JobService {
 
     private final JobRepository jobRepository;
 
+    private final RestTemplate restTemplate;
+
     private JonWithCompanyDTO convertToDTO(Job job){
-            RestTemplate restTemplate = new RestTemplate();
             JonWithCompanyDTO jobWithCompanyDTO = new JonWithCompanyDTO();
             jobWithCompanyDTO.setJob(job);
-            Company company = restTemplate.getForObject("http://localhost:8081/companies/"+ job.getCompanyId(), 
+            Company company = restTemplate.getForObject("http://COMPANY-SERVICE:8081/companies/"+ job.getCompanyId(), 
             Company.class);
             jobWithCompanyDTO.setCompany(company);
            
