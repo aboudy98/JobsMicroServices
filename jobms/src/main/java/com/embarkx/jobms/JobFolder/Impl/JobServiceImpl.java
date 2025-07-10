@@ -15,6 +15,7 @@ import com.embarkx.jobms.JobFolder.Job;
 import com.embarkx.jobms.JobFolder.JobRepository;
 import com.embarkx.jobms.JobFolder.JobService;
 import com.embarkx.jobms.JobFolder.External.Company;
+import com.embarkx.jobms.JobFolder.mapper.JobMapper;
 import com.embarkx.jobms.dto.JonWithCompanyDTO;
 
 @Service
@@ -26,10 +27,10 @@ public class JobServiceImpl implements JobService {
     private final RestTemplate restTemplate;
 
     private JonWithCompanyDTO convertToDTO(Job job){
-            JonWithCompanyDTO jobWithCompanyDTO = new JonWithCompanyDTO();
-            jobWithCompanyDTO.setJob(job);
+            
             Company company = restTemplate.getForObject("http://COMPANY-SERVICE:8081/companies/"+ job.getCompanyId(), 
             Company.class);
+            JonWithCompanyDTO jobWithCompanyDTO = JobMapper.mapToJobWithCompanyDTO(job, company);
             jobWithCompanyDTO.setCompany(company);
            
 
@@ -56,13 +57,15 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public Job findById(Long id) {
-        return jobRepository.findById(id).orElse(null);
+    public JonWithCompanyDTO findById(Long id) {
+        Job job = jobRepository.findById(id).orElse(null);
+
+        return convertToDTO(job);
     }
 
     @Override
     public void deleteJob(Long id) throws Exception {
-        Job jobById = findById(id);
+        Job jobById = jobRepository.findById(id).orElse(null);
         if (jobById == null) {
             throw new Exception("Job not found with id: " + id);
         }
@@ -72,7 +75,7 @@ public class JobServiceImpl implements JobService {
     @Override
     public Job updateJob(Long id, Job job) throws Exception {
 
-        Job existingJob = findById(id);
+        Job existingJob = jobRepository.findById(id).orElse(null);
         if (existingJob == null) {
             throw new Exception("Job not found with id: " + id);
         }

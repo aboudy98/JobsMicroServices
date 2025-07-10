@@ -40,8 +40,8 @@ public class JobController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Job> findById(@PathVariable Long id) throws Exception {
-        Job job = jobService.findById(id);
+    public ResponseEntity<JonWithCompanyDTO> findById(@PathVariable Long id) throws Exception {
+        JonWithCompanyDTO job = jobService.findById(id);
         if(job == null) {
             
             throw new Exception("Job not found with id: " + id);
