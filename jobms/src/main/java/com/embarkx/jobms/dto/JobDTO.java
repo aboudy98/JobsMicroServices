@@ -1,14 +1,17 @@
 package com.embarkx.jobms.dto;
 
 
+import java.util.List;
+
 import com.embarkx.jobms.JobFolder.External.Company;
+import com.embarkx.jobms.JobFolder.External.Review;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class JonWithCompanyDTO {
+public class JobDTO {
      private Long id;
     private String title;
     private String description;
@@ -16,7 +19,7 @@ public class JonWithCompanyDTO {
     private Long maxSalary;
     private String location;
     private Long companyId;
-
     private Company company;
-    
+    private List<Review> reviews;
+
 }

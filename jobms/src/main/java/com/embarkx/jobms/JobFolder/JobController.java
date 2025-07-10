@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.embarkx.jobms.dto.JonWithCompanyDTO;
+import com.embarkx.jobms.dto.JobDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,7 +27,7 @@ public class JobController {
     private final JobService jobService;
 
     @GetMapping
-    public ResponseEntity <List<JonWithCompanyDTO>> findAll(){
+    public ResponseEntity <List<JobDTO>> findAll(){
 
         return new ResponseEntity<>(jobService.findAll(),HttpStatus.OK);
     }
@@ -40,8 +40,8 @@ public class JobController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<JonWithCompanyDTO> findById(@PathVariable Long id) throws Exception {
-        JonWithCompanyDTO job = jobService.findById(id);
+    public ResponseEntity<JobDTO> findById(@PathVariable Long id) throws Exception {
+        JobDTO job = jobService.findById(id);
         if(job == null) {
             
             throw new Exception("Job not found with id: " + id);
